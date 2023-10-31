@@ -1,0 +1,40 @@
+{
+  "properties": {
+    "displayName": "Deny WVD resource creation",
+    "policyType": "Custom",
+    "mode": "All",
+    "description": "https://aka.ms/AVDblock",
+    "metadata": {
+      "createdBy": "7f1579a6-c648-43a1-ac1e-0c3020dd9b8e",
+      "createdOn": "2020-11-17T19:39:30.6756461Z",
+      "updatedBy": "7f1579a6-c648-43a1-ac1e-0c3020dd9b8e",
+      "updatedOn": "2023-02-21T23:13:49.098107Z"
+    },
+    "parameters": {},
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "like": "Microsoft.DesktopVirtualization/*"
+          },
+          {
+            "value": "[field('type')]",
+            "like": "Microsoft.DesktopVirtualization/*"
+          }
+        ]
+      },
+      "then": {
+        "effect": "deny"
+      }
+    }
+  },
+  "id": "/providers/Microsoft.Management/managementGroups/72f988bf-86f1-41af-91ab-2d7cd011db47/providers/Microsoft.Authorization/policyDefinitions/Deny WVD creation",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "Deny WVD creation",
+  "systemData": {
+    "lastModifiedBy": "sc-ze057@microsoft.com",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2023-02-21T23:13:49.0740884Z"
+  }
+}
