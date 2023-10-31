@@ -1,0 +1,91 @@
+{
+  "properties": {
+    "displayName": "MCAPS_Core_NP_Deny_HSeriesVM",
+    "policyType": "Custom",
+    "mode": "All",
+    "description": "Provisioning HPC VM of H Series (H, HBv2, HBv3, HBv4) SKUs is blocked by default.  If you need to provision HPC VM, please submit a request with business justification to OCAG Support at https://myservices-itsm.microsoftcrmportals.com/support/WCB-AzureSupport/?ServiceId=8016d886-6f84-ea11-a812-000d3a33cbf9",
+    "metadata": {
+      "category": "Block Specific VM type",
+      "createdBy": "4f87d0ef-2d92-4182-8c92-a5bf62787a8b",
+      "createdOn": "2023-04-06T12:30:24.0687578Z",
+      "updatedBy": "f1de6684-af4e-4f3e-b8bc-909389bfdac2",
+      "updatedOn": "2023-04-12T09:27:32.7933445Z"
+    },
+    "parameters": {
+      "DeniedSKUs": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "Denied SKU",
+          "description": "The list of denied sku for VM and VMSS.",
+          "strongType": "vmSKUs"
+        },
+        "defaultValue": [
+          "Standard_HB120-16rs_v2",
+          "Standard_HB120-16rs_v3",
+          "Standard_HB120-32rs_v2",
+          "Standard_HB120-32rs_v3",
+          "Standard_HB120-64rs_v2",
+          "Standard_HB120-64rs_v3",
+          "Standard_HB120-96rs_v2",
+          "Standard_HB120-96rs_v3",
+          "Standard_HB120rs_v2",
+          "Standard_HB120rs_v3",
+          "Standard_HB60-15rs",
+          "Standard_HB60-30rs",
+          "Standard_HB60-45rs",
+          "Standard_HB60rs",
+          "Standard_HC44-16rs",
+          "Standard_HC44-32rs",
+          "Standard_HC44rs"
+        ]
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "in": [
+              "Microsoft.Compute/virtualMachines",
+              "Microsoft.Compute/virtualMachineScaleSets"
+            ]
+          },
+          {
+            "anyOf": [
+              {
+                "allOf": [
+                  {
+                    "field": "Microsoft.Compute/virtualMachines/sku.name",
+                    "in": "[parameters('DeniedSKUs')]"
+                  }
+                ]
+              },
+              {
+                "allOf": [
+                  {
+                    "field": "Microsoft.Compute/VirtualMachineScaleSets/sku.name",
+                    "in": "[parameters('DeniedSKUs')]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "effect": "deny"
+      }
+    }
+  },
+  "id": "/providers/Microsoft.Management/managementGroups/MCAPSCoreNonProd/providers/Microsoft.Authorization/policyDefinitions/b8cb9284-6775-4a00-a12e-53db75874a82",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "b8cb9284-6775-4a00-a12e-53db75874a82",
+  "systemData": {
+    "createdBy": "v-gypatel@microsoft.com",
+    "createdByType": "User",
+    "createdAt": "2023-04-06T12:30:24.0072498Z",
+    "lastModifiedBy": "a00f9b3c-b172-4a2a-b834-6d6038dcb60a",
+    "lastModifiedByType": "Application",
+    "lastModifiedAt": "2023-04-12T09:27:24.104038Z"
+  }
+}
